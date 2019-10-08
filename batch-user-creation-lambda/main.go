@@ -1,4 +1,4 @@
-package main
+package batch_user_creation_lambda
 
 import (
 	"context"
@@ -126,7 +126,7 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 		}
 
 	}
-
+	return "OK", nil
 }
 
 
