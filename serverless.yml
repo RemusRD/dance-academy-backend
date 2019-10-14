@@ -22,4 +22,4 @@ functions:
   batch-user-creation:
     handler: batch-user-creation
   attendance-clerance:
-    handler:
+    handler: attendance-clearance
