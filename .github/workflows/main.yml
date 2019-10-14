@@ -1,0 +1,12 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: deploy dev
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build lambdas
+      uses: cedrickring/golang-action@1.4.1
