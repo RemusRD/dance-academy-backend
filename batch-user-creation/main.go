@@ -1,4 +1,4 @@
-package batch_user_creation_lambda
+package main
 
 import (
 	"context"
@@ -47,7 +47,7 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 			secondSurnameFirstLetter := string(record[3][0])
 			username += secondSurnameFirstLetter
 		}
-		username = strings.ToLower(strings.TrimSpace(username));
+		username = strings.ToLower(strings.TrimSpace(username))
 		var role string
 		if record[4] == "M" {
 			role = "GIRL"
@@ -59,7 +59,7 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 
 		sess, err := session.NewSession(&aws.Config{
 			Region: aws.String(os.Getenv("AWS_REGION"))},
-			)
+		)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -82,12 +82,11 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 						Value: aws.String("true"),
 					},
 				},
-				UserPoolId:             aws.String(os.Getenv("USER_POOL_ID")),
-				Username:               aws.String(username),
-				ValidationData:         nil,
+				UserPoolId:     aws.String(os.Getenv("USER_POOL_ID")),
+				Username:       aws.String(username),
+				ValidationData: nil,
 			},
-
-			)
+		)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -95,16 +94,16 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 		svc := dynamodb.New(sess)
 
 		type Class struct {
-			Type string `dynamodbav:"type"`
-			Id string `dynamodbav:"id"`
-			Name string `dynamodbav:"name"`
-			Phone_Number string `dynamodbav:"phone_number"`
-			Role string `dynamodbav:"role"`
-			Classes []string `dynamodbav:"classes"`
-			SchoolId string `dynamodbav:"schoolId"`
+			Type         string   `dynamodbav:"type"`
+			Id           string   `dynamodbav:"id"`
+			Name         string   `dynamodbav:"name"`
+			Phone_Number string   `dynamodbav:"phone_number"`
+			Role         string   `dynamodbav:"role"`
+			Classes      []string `dynamodbav:"classes"`
+			SchoolId     string   `dynamodbav:"schoolId"`
 		}
 
-		userInfo := Class {
+		userInfo := Class{
 			Type:         "USER",
 			Id:           *user.User.Attributes[0].Value,
 			Name:         strings.Title(strings.ToLower(firstName)),
@@ -117,10 +116,10 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 		av, err := dynamodbattribute.MarshalMap(userInfo)
 
 		input := &dynamodb.PutItemInput{
-			Item:                        av,
-			TableName:                   aws.String(os.Getenv("TABLE_NAME")),
+			Item:      av,
+			TableName: aws.String(os.Getenv("TABLE_NAME")),
 		}
-		_,err = svc.PutItem(input)
+		_, err = svc.PutItem(input)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -128,6 +127,3 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 	}
 	return "OK", nil
 }
-
-
-

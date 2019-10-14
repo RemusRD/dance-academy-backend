@@ -1,37 +1,16 @@
 service: dance-academy-backend
 
-app: dance-academy-backend
+app: dance-academy
 org: remusrd
 
-# frameworkVersion: "=X.X.X"
 frameworkVersion: '>=1.28.0 <2.0.0'
 
 provider:
   name: aws
   runtime: go1.x
 
-  stage: staging
+  stage: dev
   region: eu-west-2
-
-# you can add statements to the Lambda function's IAM Role here
-#  iamRoleStatements:
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:ListBucket"
-#      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-#    - Effect: "Allow"
-#      Action:
-#        - "s3:PutObject"
-#      Resource:
-#        Fn::Join:
-#          - ""
-#          - - "arn:aws:s3:::"
-#            - "Ref" : "ServerlessDeploymentBucket"
-#            - "/*"
-
-# you can define service wide environment variables here
-#  environment:
-#    variable1: value1
 
 package:
   exclude:
@@ -40,9 +19,7 @@ package:
     - ./bin/**
 
 functions:
-  attendance-clearance:
-    handler: class-attendance-clearance
-    events:
-      - schelude:
-        name: class-attendance-job-event
-        rate: rate(4 hours)
+  batch-user-creation:
+    handler: batch-user-creation
+  attendance-clerance:
+    handler:
