@@ -1,6 +1,8 @@
 package main
 
 import (
+	"context"
+	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -13,12 +15,10 @@ type BatchCreateUsersEvent struct {
 }
 
 func main() {
-	HandleRequest(BatchCreateUsersEvent{
-		ClassId: "512195ea-159c-4d6f-9086-0906ba8024a1",
-	})
+	lambda.Start(HandleRequest)
 }
 
-func HandleRequest(event BatchCreateUsersEvent) (string, error) {
+func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(os.Getenv("AWS_REGION"))},
 	)
