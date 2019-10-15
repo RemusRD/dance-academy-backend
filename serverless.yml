@@ -21,5 +21,7 @@ package:
 functions:
   batch-user-creation:
     handler: bin/batch-user-creation
+    memorySize: 128
   attendance-clerance:
     handler: bin/attendance-clearance
+    memorySize: 128
