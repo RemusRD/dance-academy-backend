@@ -27,3 +27,5 @@ functions:
   attendance-clerance:
     handler: bin/attendance-clearance
     memorySize: 128
+    environment:
+      TABLE_NAME: luna-salcedo
