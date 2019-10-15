@@ -28,7 +28,14 @@ functions:
     handler: bin/attendance-clearance
     iamRoleStatements:
       - Effect: 'Allow'
-        Action: dynamodb:UpdateItem
+        Action:
+          - dynamodb:DescribeTable
+          - dynamodb:Query
+          - dynamodb:Scan
+          - dynamodb:GetItem
+          - dynamodb:PutItem
+          - dynamodb:UpdateItem
+          - dynamodb:DeleteItem
         Resource: 'arn:aws:dynamodb:eu-west-2:*:*'
     iamRoleStatementsInherit: true
     memorySize: 128
