@@ -26,10 +26,11 @@ functions:
       TABLE_NAME: luna-salcedo
   attendance-clerance:
     handler: bin/attendance-clearance
-    iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: 'Allow'
-        Action: 'dynamodb:UpdateItem'
+        Action: dynamodb:UpdateItem
+        Resource: 'arn:aws:dynamodb:eu-west-2:*:*'
+    iamRoleStatementsInherit: true
     memorySize: 128
     environment:
       TABLE_NAME: luna-salcedo
