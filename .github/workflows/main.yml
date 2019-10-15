@@ -10,3 +10,9 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build lambdas
       uses: cedrickring/golang-action@1.4.1
+    - name: serverless deploy
+      uses: serverless/github-action@master
+      with:
+        args: deploy --verbose
+      env:
+        SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
