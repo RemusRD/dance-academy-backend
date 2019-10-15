@@ -29,8 +29,7 @@ functions:
     iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: 'Allow'
-        action:
-          - 'dynamodb:UpdateItem'
+        Action: 'dynamodb:UpdateItem'
     memorySize: 128
     environment:
       TABLE_NAME: luna-salcedo
