@@ -24,7 +24,7 @@ functions:
     memorySize: 128
     environment:
       TABLE_NAME: luna-salcedo
-  attendance-clerance:
+  attendance-clearance:
     handler: bin/attendance-clearance
     iamRoleStatements:
       - Effect: 'Allow'
