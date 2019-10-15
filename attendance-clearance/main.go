@@ -55,6 +55,5 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	return "", nil
 }
