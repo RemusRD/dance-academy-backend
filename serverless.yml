@@ -23,7 +23,6 @@ functions:
     handler: bin/batch-user-creation
     memorySize: 128
     environment:
-      AWS_REGION: "eu-west-2"
       TABLE_NAME: "luna-salcedo"
   attendance-clerance:
     handler: bin/attendance-clearance
