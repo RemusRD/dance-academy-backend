@@ -4,8 +4,8 @@ build:
 	go get -u "github.com/aws/aws-lambda-go/lambda"
 	go get -u "github.com/aws/aws-sdk-go"
 	env GOOS=linux
-	go build -v -ldflags="-d -s -w" -a -o bin/batch-user-creation batch-user-creation/main.go
-	go build -v -ldflags="-d -s -w" -a -o bin/attendance-clearance attendance-clearance/main.go
+	go build -v -ldflags="-s -w" -a -o bin/batch-user-creation batch-user-creation/main.go
+	go build -v -ldflags="-s -w" -a -o bin/attendance-clearance attendance-clearance/main.go
 
 clean:
 	rm -rf ./bin
