@@ -1,9 +1,6 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
@@ -16,13 +13,12 @@ type BatchCreateUsersEvent struct {
 }
 
 func main() {
-	lambda.Start(HandleRequest)
+	HandleRequest(BatchCreateUsersEvent{
+		ClassId: "512195ea-159c-4d6f-9086-0906ba8024a1",
+	})
 }
 
-func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, error) {
-
-	fmt.Println("using this table name: ", os.Getenv("TABLE_NAME"))
-
+func HandleRequest(event BatchCreateUsersEvent) (string, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(os.Getenv("AWS_REGION"))},
 	)
@@ -35,7 +31,7 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 	updateExpression := "SET #a = :emptyMap"
 
 	mapAttribute := "attendance"
-	_, err = svc.UpdateItem(
+	output, err := svc.UpdateItem(
 		&dynamodb.UpdateItemInput{
 			Key: map[string]*dynamodb.AttributeValue{
 				"type": {
@@ -53,6 +49,8 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 			},
 		},
 	)
+
+	println(output)
 
 	if err != nil {
 		log.Fatal(err)
