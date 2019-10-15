@@ -20,6 +20,6 @@ package:
 
 functions:
   batch-user-creation:
-    handler: batch-user-creation
+    handler: bin/batch-user-creation
   attendance-clerance:
-    handler: attendance-clearance
+    handler: bin/attendance-clearance
