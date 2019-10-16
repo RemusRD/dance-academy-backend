@@ -7,6 +7,7 @@ build:
 	GOARCH=amd64
 	go build -v -ldflags="-s -w" -a -o bin/batch-user-creation batch-user-creation/main.go
 	go build -v -ldflags="-s -w" -a -o bin/attendance-clearance attendance-clearance/main.go
+	go build -v -ldflags="-s -w" -a -o bin/attendance-clearance-scheduler attendance-clearance-scheduler/main.go
 
 clean:
 	rm -rf ./bin

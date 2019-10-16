@@ -22,6 +22,22 @@ package:
   include:
     - ./bin/**
 
+resources:
+  Resources:
+    schedulerRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: /
+        RoleName: schedulerRole
+        AssumeRolePolicyDocument:
+          Version: '2019-10-16'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action: sts:AssumeRole
+
 functions:
   batch-user-creation:
     handler: bin/batch-user-creation
@@ -38,3 +54,10 @@ functions:
     memorySize: 128
     environment:
       TABLE_NAME: luna-salcedo
+  attendance-clearance-scheduler:
+    handler: bin/attendance-clearance-scheduler
+    iamRoleStatementsInherit: true
+    memorySize: 128
+    environment:
+      LAMBDA_ARN: #{attendance-clearance.Arn}
+      ATTENDANCE_CLEARANCE_ROLE_ARN: #{schedulerRole.Arn}
