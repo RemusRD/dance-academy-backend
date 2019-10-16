@@ -10,7 +10,7 @@ import (
 	"os"
 )
 
-type BatchCreateUsersEvent struct {
+type AttendanceClearanceEvent struct {
 	ClassId string `json:"classId"`
 }
 
@@ -18,7 +18,7 @@ func main() {
 	lambda.Start(HandleRequest)
 }
 
-func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, error) {
+func HandleRequest(ctx context.Context, event AttendanceClearanceEvent) (string, error) {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String(os.Getenv("AWS_REGION"))},
 	)
@@ -29,7 +29,6 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 	svc := dynamodb.New(sess)
 
 	updateExpression := "SET #a = :emptyMap"
-
 	mapAttribute := "attendance"
 	ifClassExistsCondition := "id = :classId"
 	output, err := svc.UpdateItem(
