@@ -8,12 +8,13 @@ jobs:
     name: deploy dev
     steps:
     - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '10.x'
     - name: Build lambdas
       uses: cedrickring/golang-action@1.4.1
     - name: Install serverless plugins
-      uses: actions/npm@master
-      with:
-        args: install serverless-iam-roles-per-function 
+      run: install serverless-iam-roles-per-function 
     - name: serverless deploy
       uses: serverless/github-action@master
       with:
