@@ -32,7 +32,7 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 	updateExpression := "SET #a = :emptyMap"
 
 	mapAttribute := "attendance"
-	ifClassExistsCondition := fmt.Sprintf("id = :%s", event.ClassId)
+	ifClassExistsCondition := fmt.Sprintf("id = %s", event.ClassId)
 	output, err := svc.UpdateItem(
 		&dynamodb.UpdateItemInput{
 			Key: map[string]*dynamodb.AttributeValue{
