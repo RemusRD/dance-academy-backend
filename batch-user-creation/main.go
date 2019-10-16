@@ -69,9 +69,6 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 		user, err := cognitoClient.AdminCreateUser(
 			&cognitoidentityprovider.AdminCreateUserInput{
 				DesiredDeliveryMediums: aws.StringSlice([]string{"EMAIL"}),
-				ForceAliasCreation:     nil,
-				MessageAction:          nil,
-				TemporaryPassword:      nil,
 				UserAttributes: []*cognitoidentityprovider.AttributeType{
 					{
 						Name:  aws.String("email"),
@@ -82,9 +79,8 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 						Value: aws.String("true"),
 					},
 				},
-				UserPoolId:     aws.String(os.Getenv("USER_POOL_ID")),
-				Username:       aws.String(username),
-				ValidationData: nil,
+				UserPoolId: aws.String(os.Getenv("USER_POOL_ID")),
+				Username:   aws.String(username),
 			},
 		)
 		if err != nil {
