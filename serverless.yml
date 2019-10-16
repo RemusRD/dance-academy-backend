@@ -5,6 +5,9 @@ org: remusrd
 
 frameworkVersion: '>=1.28.0 <2.0.0'
 
+plugins:
+  - serverless-iam-roles-per-function
+
 provider:
   name: aws
   runtime: go1.x
@@ -26,11 +29,11 @@ functions:
       TABLE_NAME: luna-salcedo
   attendance-clearance:
     handler: bin/attendance-clearance
+    iamRoleStatementsInherit: true
     iamRoleStatements:
-      - Effect: 'Allow'
-        Action:
-          - dynamodb:UpdateItem
-        Resource: 'arn:aws:dynamodb:eu-west-2:*:*'
+      - Effect: "Allow"
+        Action: dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:eu-west-2:*:*
     memorySize: 128
     environment:
       TABLE_NAME: luna-salcedo
