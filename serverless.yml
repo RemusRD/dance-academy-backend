@@ -7,6 +7,7 @@ frameworkVersion: '>=1.28.0 <2.0.0'
 
 plugins:
   - serverless-iam-roles-per-function
+  - serverless-pseudo-parameters
 
 provider:
   name: aws

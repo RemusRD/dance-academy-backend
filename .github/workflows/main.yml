@@ -14,7 +14,8 @@ jobs:
     - name: Build lambdas
       uses: cedrickring/golang-action@1.4.1
     - name: Install serverless plugins
-      run: npm install serverless-iam-roles-per-function 
+    - run: npm i serverless-iam-roles-per-function
+    - run: npm i serverless-pseudo-parameters
     - name: serverless deploy
       uses: serverless/github-action@master
       with:
