@@ -31,6 +31,7 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 	updateExpression := "SET #a = :emptyMap"
 
 	mapAttribute := "attendance"
+	ifClassExistsCondition := "id = :event.classId"
 	output, err := svc.UpdateItem(
 		&dynamodb.UpdateItemInput{
 			Key: map[string]*dynamodb.AttributeValue{
@@ -44,6 +45,7 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 			TableName:                aws.String(os.Getenv("TABLE_NAME")),
 			UpdateExpression:         aws.String(updateExpression),
 			ExpressionAttributeNames: map[string]*string{"#a": &mapAttribute},
+			ConditionExpression:      &ifClassExistsCondition,
 			ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
 				":emptyMap": {M: make(map[string]*dynamodb.AttributeValue)},
 			},
