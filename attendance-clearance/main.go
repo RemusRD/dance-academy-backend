@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -31,7 +32,7 @@ func HandleRequest(ctx context.Context, event BatchCreateUsersEvent) (string, er
 	updateExpression := "SET #a = :emptyMap"
 
 	mapAttribute := "attendance"
-	ifClassExistsCondition := "id = :event.classId"
+	ifClassExistsCondition := fmt.Sprintf("id = :%s", event.ClassId)
 	output, err := svc.UpdateItem(
 		&dynamodb.UpdateItemInput{
 			Key: map[string]*dynamodb.AttributeValue{
