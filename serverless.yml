@@ -37,6 +37,16 @@ resources:
                 Service:
                   - lambda.amazonaws.com
               Action: sts:AssumeRole
+        Policies:
+          - PolicyName: invokeAttendanceClearancePolicy
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - lambda:InvokeFunction
+                  Resource:
+                    Fn::GetAtt: [ AttendanceDashclearanceLambdaFunction, Arn ]
 
 functions:
   batch-user-creation:
