@@ -28,34 +28,35 @@ func HandleRequest(ctx context.Context) (string, error) {
 	}
 	cloudWatchEventsClient := cloudwatchevents.New(sess)
 
-	ruleName := "ec34978a-5c23-40ab-bca1-bf8bb4dfaafe-attendance-clearance"
+	ruleName := "512195ea-159c-4d6f-9086-0906ba8024a1-attendance-clearance"
 
-	cloudWatchEventsClient.PutRule(
+	_, err = cloudWatchEventsClient.PutRule(
 		&cloudwatchevents.PutRuleInput{
-			Description:        nil,
-			EventBusName:       nil,
-			EventPattern:       nil,
 			Name:               aws.String(ruleName),
 			RoleArn:            aws.String(os.Getenv("ATTENDANCE_CLEARANCE_ROLE_ARN")),
-			ScheduleExpression: nil,
-			State:              nil,
-			Tags:               nil,
+			ScheduleExpression: aws.String("0 6 ? * TUE *"),
 		},
 	)
+
+	if err != nil {
+		log.Fatal(err)
+	}
 	attendanceClearanceEvent := AttendanceClearanceEvent{
-		ClassId: "ec34978a-5c23-40ab-bca1-bf8bb4dfaafe",
+		ClassId: "512195ea-159c-4d6f-9086-0906ba8024a1",
 	}
 	attendanceClearanceEventJson, err := json.Marshal(attendanceClearanceEvent)
-	cloudWatchEventsClient.PutTargets(&cloudwatchevents.PutTargetsInput{
+	_, err = cloudWatchEventsClient.PutTargets(&cloudwatchevents.PutTargetsInput{
 		Rule: aws.String(ruleName),
 		Targets: []*cloudwatchevents.Target{
-			&cloudwatchevents.Target{
+			{
 				Arn:   aws.String(os.Getenv("LAMBDA_ARN")),
 				Id:    aws.String("myCloudWatchEventsTarget"),
 				Input: aws.String(string(attendanceClearanceEventJson)),
 			},
 		},
 	})
-
+	if err != nil {
+		log.Fatal(err)
+	}
 	return "", nil
 }
