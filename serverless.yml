@@ -56,7 +56,6 @@ functions:
       TABLE_NAME: luna-salcedo
   attendance-clearance:
     handler: bin/attendance-clearance
-    iamRoleStatementsInherit: true
     iamRoleStatements:
       - Effect: "Allow"
         Action: dynamodb:UpdateItem
